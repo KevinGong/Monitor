@@ -2,8 +2,18 @@
 # -*- coding:utf-8 -*-
 import smtplib
 from email.MIMEText import MIMEText
-
-mail_to="736748191@qq.com"
+import sys
+def mail_who(ip):
+    f = file("conf/sms_send.conf",'r')
+    d = {}
+    i = f.readline()
+    while i:
+       d[i.split('#')[0]] = i.split('#')[1].split(',')
+       i = f.readline()
+    try:
+      return d[ip]
+    except Exception,e:
+      return e
 
 def send_mail(to_list,sub,content):
     mail_host="smtp.126.com"
@@ -14,7 +24,7 @@ def send_mail(to_list,sub,content):
     msg = MIMEText(content)
     msg['Subject'] = sub
     msg['From'] = me
-    msg['To'] = to_list
+    msg['To'] = ','.join(to_list)
     try:
         s = smtplib.SMTP()
         s.connect(mail_host)
@@ -23,10 +33,11 @@ def send_mail(to_list,sub,content):
         s.close()
         return True
     except Exception, e:
-        print str(e)
         return False
 if __name__=="__main__":
-    if send_mail(mail_to,"hello","this is test"):
+    mail_t = mail_who(sys.argv[1]) 
+    if send_mail(mail_t,"hello",sys.argv[2]):
         print "success"
     else:
         print "fail"
+    print mail_who(str(sys.argv[1]))

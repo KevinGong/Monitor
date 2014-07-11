@@ -1,0 +1,8 @@
+git config --global user.email "736748191@qq.com"
+git config --global user.name "KevinGong"
+touch aa
+git init
+git add aa
+git commit -m "first commit"
+git remote add origin https://github.com/KevinGong/Monitor.git
+git push -u origin master

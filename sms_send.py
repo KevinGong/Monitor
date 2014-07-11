@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import smtplib
+import os
 from email.MIMEText import MIMEText
 import sys
 def mail_who(ip):
@@ -14,6 +15,12 @@ def mail_who(ip):
       return d[ip]
     except Exception,e:
       return e
+def send_meg(ip,message="null"):
+    user = mail_who(ip)
+    for i in range(0,len(user)):
+       ur = user[i].split('@')[0]
+       exe = "./msg_send.sh  " + ur + " " + message
+       os.system(exe)
 
 def send_mail(to_list,sub,content):
     mail_host="smtp.126.com"
@@ -41,3 +48,4 @@ if __name__=="__main__":
     else:
         print "fail"
     print mail_who(str(sys.argv[1]))
+    send_meg(sys.argv[1],"成功")

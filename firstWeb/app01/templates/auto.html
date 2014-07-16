@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<br>
+<br>
+<h1>This is Auto page </h1>
+{% for ip in ip_list %}
+     {{ ip.ip }} {{ ip.hostname }} <br>
+{% endfor %}
+{%endblock%}
+
